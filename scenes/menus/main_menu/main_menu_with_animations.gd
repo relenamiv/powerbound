@@ -57,10 +57,10 @@ func _ready():
 
 func _setup_game_buttons():
 	super._setup_game_buttons()
-	if GameState.has_game_state():
-		%ContinueGameButton.show()
-		if GameState.get_max_level_reached() > 0:
-			%LevelSelectButton.show()
+	#if GameState.has_game_state():
+		#%ContinueGameButton.show()
+		#if GameState.get_max_level_reached() > 0:
+			#%LevelSelectButton.show()
 
 func _on_continue_game_button_pressed():
 	load_game_scene()
