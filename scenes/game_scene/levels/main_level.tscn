@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://dsowfkbx73cgv"]
+
+[ext_resource type="Script" path="res://scenes/game_scene/levels/level.gd" id="1_6nwjd"]
+[ext_resource type="PackedScene" uid="uid://cyhua6jk5lsf2" path="res://scenes/game_scene/grid/selectable_grid.tscn" id="2_6gqoe"]
+[ext_resource type="PackedScene" uid="uid://cwd7qpvepqnje" path="res://scenes/game_scene/grid/grid_highlighter.tscn" id="3_k3dda"]
+[ext_resource type="PackedScene" uid="uid://hvb21csaqb1g" path="res://scenes/game_scene/player/green_player.tscn" id="3_org58"]
+[ext_resource type="PackedScene" uid="uid://cxk2i48pgc4s4" path="res://scenes/game_scene/player/blue_player.tscn" id="4_7nbt4"]
+[ext_resource type="PackedScene" uid="uid://dai36xap2cuiu" path="res://scenes/game_scene/player/red_player.tscn" id="5_b6d7b"]
+[ext_resource type="PackedScene" uid="uid://dmv1kqjrpcp3d" path="res://scenes/game_scene/player/yellow_player.tscn" id="6_axhaq"]
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_6nwjd")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="."]
+
+[node name="GameContainer" type="Node2D" parent="."]
+
+[node name="SelectableGrid" parent="GameContainer" instance=ExtResource("2_6gqoe")]
+scale = Vector2(4, 4)
+
+[node name="GridHighlighter" parent="GameContainer" instance=ExtResource("3_k3dda")]
+
+[node name="Green" parent="GameContainer" instance=ExtResource("3_org58")]
+scale = Vector2(0.15, 0.15)
+
+[node name="Blue" parent="GameContainer" instance=ExtResource("4_7nbt4")]
+visible = false
+scale = Vector2(0.15, 0.15)
+
+[node name="Red" parent="GameContainer" instance=ExtResource("5_b6d7b")]
+visible = false
+scale = Vector2(0.15, 0.15)
+
+[node name="Yellow" parent="GameContainer" instance=ExtResource("6_axhaq")]
+visible = false
+scale = Vector2(0.15, 0.15)

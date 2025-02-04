@@ -12,7 +12,7 @@ var active: bool = false
 
 var _energy: int
 var max_energy: int
-var moveset: Array[String]
+var moveset: Array
 var passive: String
 
 var tile_coords: Vector2 = Vector2(-1, -1)
