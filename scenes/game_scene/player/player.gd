@@ -173,3 +173,7 @@ func _move_to_tile(tile_coords: Vector2) -> bool:
 			return true
 		
 	return false
+
+func start_tile_selection():
+	player_state = PlayerState.SELECTING_TILE
+	# enable grid selection
