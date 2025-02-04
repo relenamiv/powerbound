@@ -27,6 +27,9 @@ signal update_status_message(message: String)
 func _ready() -> void:
 	_load_player_data()
 	
+	if grid != null:
+		SignalUtil.try_connect_signal(grid, "tile_selected", Callable(self, "on_tile_selected"))
+	
 	%AnimatedSprite2D.animation_finished.connect(_on_animation_finished)
 	%AnimatedSprite2D.play("idle")
 
