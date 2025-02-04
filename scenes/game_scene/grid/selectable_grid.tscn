@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyhua6jk5lsf2"]
+
+[ext_resource type="TileSet" uid="uid://btqcj503agqif" path="res://scenes/game_scene/grid/isometric_sandbox_tileset.tres" id="1_scssf"]
+[ext_resource type="Script" path="res://scenes/game_scene/grid/selectable_grid.gd" id="2_j1kc5"]
+
+[node name="SelectableGrid" type="TileMapLayer"]
+tile_set = ExtResource("1_scssf")
+script = ExtResource("2_j1kc5")
