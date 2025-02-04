@@ -15,7 +15,7 @@ var max_energy: int
 var moveset: Array[String]
 var passive: String
 
-var tile_coords: Vector2i = Vector2i(-1, -1)
+var tile_coords: Vector2 = Vector2(-1, -1)
 
 var incoming_heal: int = 0
 
@@ -28,6 +28,7 @@ func _ready() -> void:
 	_load_player_data()
 	
 	%AnimatedSprite2D.animation_finished.connect(_on_animation_finished)
+	%AnimatedSprite2D.play("idle")
 
 func _load_player_data():
 	var player_data = PlayerData.players[name]
@@ -128,7 +129,7 @@ func _get_move_multiplier(move_name: String, voltage: int) -> int:
 func heal(amount: int):
 	_set_energy(_energy + amount)
 	
-func on_tile_selected(tile_coords: Vector2i):
+func on_tile_selected(tile_coords: Vector2):
 	if !active:
 		return
 		
@@ -147,14 +148,14 @@ func on_tile_selected(tile_coords: Vector2i):
 		_:
 			pass
 
-# return: True if player moves to a previously unoccupied tile; false otherwise
-func _move_to_tile(tile_coords: Vector2i) -> bool:	
+# return: True if player moves to a new, previously unoccupied tile; false otherwise
+func _move_to_tile(tile_coords: Vector2) -> bool:	
 	if PlayerState.SELECTING_TILE and tile_coords != self.tile_coords:
 		if tile_coords != null and self.tile_coords != null:
 			grid.vacate_tile(self.tile_coords)
-		grid.occupy_tile(tile_coords, self)
-		self.tile_coords = tile_coords
-		# TODO: Change position
-		return true
+		if grid.occupy_tile(tile_coords, self):
+			self.tile_coords = tile_coords
+			# TODO: Change position
+			return true
 		
 	return false
