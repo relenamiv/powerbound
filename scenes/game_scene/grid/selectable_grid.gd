@@ -1,15 +1,15 @@
 extends TileMapLayer
 
 @export var tile_source_id: int = 0
-@export var default_atlas_coords: Vector2i = Vector2i(0, 0)
-@export var grid_dimensions: Vector2i = Vector2i(4, 4)
-@export var tile_size: Vector2i = Vector2i(32, 16)
+@export var default_atlas_coords: Vector2 = Vector2(0, 0)
+@export var grid_dimensions: Vector2 = Vector2(4, 4)
+@export var tile_size: Vector2 = Vector2(32, 16)
 
-var valid_tiles: Array[Vector2i]
+var valid_tiles: Array[Vector2]
 var active: bool = false
-var occupied_tiles: Dictionary = {} # Key: tile_coords (Vector2i), Value: Player instance
+var occupied_tiles: Dictionary = {} # Key: tile_coords (Vector2), Value: Player instance
 
-signal tile_selected(tile_coords: Vector2i)
+signal tile_selected(tile_coords: Vector2)
 
 func _ready() -> void:
 	if not tile_set.has_source(tile_source_id):
@@ -29,6 +29,7 @@ func _generate_grid(width: int, length: int):
 
 			var tile_coords = map_to_local(iso_pos)
 			valid_tiles.append(_get_tile_pos(tile_coords))
+			print(_get_tile_pos(tile_coords))
 			
 func _input(event):
 	if active and event is InputEventMouseButton and event.pressed:
@@ -48,18 +49,18 @@ func disable_selection():
 		print("[SelectableGrid] Warning: Grid is already disabled!")
 	active = false
 
-func _get_tile_pos(tile_coords: Vector2i) -> Vector2i:
-	return Vector2i(floor(tile_coords.x / tile_size.y), floor(tile_coords.y / tile_size.y))
+func _get_tile_pos(tile_coords: Vector2) -> Vector2:
+	return Vector2(floor(tile_coords.x / tile_size.y), floor(tile_coords.y / tile_size.y))
 	
 # Checking validity based off relative position of tiles
 func is_valid_tile(tile_coords: Vector2) -> bool:
 	return _get_tile_pos(tile_coords) in valid_tiles
 	
-func get_voltage(tile_coords: Vector2i) -> int:
+func get_voltage(tile_coords: Vector2) -> int:
 	var tile_pos = _get_tile_pos(tile_coords)
 	return tile_pos.y + 1 - int(floor(tile_pos.x / 2.0))
 
-func _get_layer(tile_coords: Vector2i) -> int:
+func _get_layer(tile_coords: Vector2) -> int:
 	var tile_pos = _get_tile_pos(tile_coords)
 	return tile_pos.y + 1 + int(floor(-tile_pos.x / 2.0))
 
