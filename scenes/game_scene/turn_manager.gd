@@ -55,10 +55,9 @@ func _next_turn():
 func _end_turn():	
 	turn_state = TurnState.IDLE	
 	
-	# TODO: implement enemy class
-	#if enemy.is_down():
-		#enemy_down.emit()
-		#return
+	if enemy.is_down():
+		enemy_down.emit()
+		return
 		
 	if players.size() - num_players_down == 0:
 		all_players_down.emit()
@@ -111,6 +110,7 @@ func _on_player_death(id: int):
 func _execute_enemy_turn():
 	turn_state = TurnState.EXECUTING
 	enemy_turn_started.emit()
+	#enemy.select_action()
 	_kill_random_player()
 	%EnemyTimer.start()
 	

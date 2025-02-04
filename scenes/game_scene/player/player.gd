@@ -118,7 +118,7 @@ func use_move(move_name: String) -> bool:
 				p.heal(amount)
 			message += "Restored everyone with %d energy!" % amount
 		"enemy":
-			var enemy = get_tree().get_first_node_in_group("Enemy")
+			var enemy = get_tree().get_first_node_in_group("enemy")
 			if enemy == null:
 				printerr("[Player] Enemy not found in scene! Cannot use attack.")
 				return false
@@ -133,6 +133,7 @@ func use_move(move_name: String) -> bool:
 	update_status_message.emit(message)
 	
 	_set_energy(energy - cost)
+	%AnimatedSprite2D.play("attack")
 	return true
 
 # Move multipliers are conditional (generally based on voltage)

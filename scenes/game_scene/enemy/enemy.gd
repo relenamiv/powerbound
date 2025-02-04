@@ -178,3 +178,6 @@ func action_defend():
 
 func heal(amount: int):
 	_set_energy(energy + amount)
+	
+func is_down():
+	return enemy_state == EnemyState.DOWN
