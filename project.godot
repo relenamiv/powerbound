@@ -21,6 +21,7 @@ SceneLoader="*res://addons/maaacks_game_template/base/scenes/autoloads/scene_loa
 ProjectMusicController="*res://addons/maaacks_game_template/base/scenes/autoloads/project_music_controller.tscn"
 ProjectUISoundController="*res://addons/maaacks_game_template/base/scenes/autoloads/project_ui_sound_controller.tscn"
 PlayerData="*res://scripts/player_data.gd"
+EnemyData="*res://scripts/enemy_data.gd"
 
 [display]
 
