@@ -45,12 +45,10 @@ func _connect_player_signals():
 	
 func _next_turn():
 	if enemy_turn:
-		print("Enemy turn!")
 		_execute_enemy_turn()
 	else:
 		current_player = players[current_index]
 		current_player.activate()
-		print("%s's turn!" % current_player.name)
 		turn_state = TurnState.SELECTING_ACTION
 		player_turn_started.emit(current_player.id)
 
