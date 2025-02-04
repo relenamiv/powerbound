@@ -9,8 +9,8 @@ static func try_connect_signal(node: Node, signal_name: String, callable: Callab
 	if node.has_signal(signal_name):
 		if not node.is_connected(signal_name, callable):
 			node.connect(signal_name, callable)
-			print("[SignalUtil] Connected signal: ", signal_name, " on ", node.name)
+			print("[SignalUtil] Connected signal: %s on %s to %s" % [signal_name, node.name, callable.get_object().name])
 		else:
-			print("[SignalUtil] Signal already connected: ", signal_name, " on ", node.name)
+			print("[SignalUtil] Signal already connected: %s on %s to %s" % [signal_name, node.name, callable.get_object().name])
 	else:
 		printerr("[SignalUtil] ERROR: Node does not have signal: ", signal_name, " on ", node.name)
