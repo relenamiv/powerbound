@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dsowfkbx73cgv"]
+[gd_scene load_steps=9 format=3 uid="uid://dsowfkbx73cgv"]
 
 [ext_resource type="Script" path="res://scenes/game_scene/levels/level.gd" id="1_6nwjd"]
 [ext_resource type="PackedScene" uid="uid://cyhua6jk5lsf2" path="res://scenes/game_scene/grid/selectable_grid.tscn" id="2_6gqoe"]
+[ext_resource type="PackedScene" uid="uid://dx37fglxdacsw" path="res://scenes/game_scene/turn_manager.tscn" id="2_iu0kw"]
 [ext_resource type="PackedScene" uid="uid://cwd7qpvepqnje" path="res://scenes/game_scene/grid/grid_highlighter.tscn" id="3_k3dda"]
 [ext_resource type="PackedScene" uid="uid://hvb21csaqb1g" path="res://scenes/game_scene/player/green_player.tscn" id="3_org58"]
 [ext_resource type="PackedScene" uid="uid://cxk2i48pgc4s4" path="res://scenes/game_scene/player/blue_player.tscn" id="4_7nbt4"]
@@ -10,6 +11,8 @@
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_6nwjd")
+
+[node name="TurnManager" parent="." instance=ExtResource("2_iu0kw")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -35,3 +38,27 @@ scale = Vector2(0.15, 0.15)
 
 [node name="Yellow" parent="GameContainer/PlayerContainer" groups=["players"] instance=ExtResource("6_axhaq")]
 scale = Vector2(0.15, 0.15)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = -242.0
+offset_bottom = -134.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MoveButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Move"
+
+[node name="AttackButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Attack"
+
+[connection signal="pressed" from="VBoxContainer/MoveButton" to="." method="temp_move"]
+[connection signal="pressed" from="VBoxContainer/AttackButton" to="." method="temp_attack"]

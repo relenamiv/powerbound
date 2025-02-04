@@ -23,7 +23,8 @@ var incoming_heal: int = 0
 @onready var id = get_index() 
 
 signal energy_changed(_energy: int, max_energy: int)
-signal moved_tile()
+signal moved_tile(id: int)
+signal player_downed(id: int)
 signal update_status_message(message: String)
 
 func _ready() -> void:
@@ -43,10 +44,10 @@ func _load_player_data():
 	if player_data.has("passive"):
 		passive = player_data["passive"]
 
-func move_to_starting_position(starting_positions: Array[Vector2]):
+func init_starting_position(starting_coord: Vector2):
 	player_state = PlayerState.SELECTING_TILE
-	if not _move_to_tile(starting_positions[id]):
-		printerr("[Player] ERROR: %s did not move to starting position %s" % [name, str(starting_positions[id])])
+	if not _move_to_tile(starting_coord):
+		printerr("[Player] ERROR: %s did not move to starting position %s" % [name, starting_coord])
 	player_state = PlayerState.IDLE
 
 func _on_animation_finished():
@@ -63,9 +64,9 @@ func _set_energy(value: int):
 	
 func _handle_death():
 	player_state = PlayerState.DOWN
-	# grid.vacate_tile(tile_coords)
-	
-	%AnimatedSprite2D.play_animation("die")
+	grid.vacate_tile(tile_coords)
+	player_downed.emit(id)
+	%AnimatedSprite2D.play("die")
 	
 func is_down():
 	return player_state == PlayerState.DOWN
@@ -75,7 +76,8 @@ func take_damage(power: int):
 	var amount = power * voltage
 	_set_energy(_energy - amount)
 	
-	%AnimatedSprite2D.play_animation("hurt")
+	if player_state != PlayerState.DOWN:
+		%AnimatedSprite2D.play("hurt")
 	
 func activate():
 	if active:
@@ -117,6 +119,9 @@ func use_move(move_name: String) -> bool:
 			message += "Restored everyone with %d energy!" % amount
 		"enemy":
 			var enemy = get_tree().get_first_node_in_group("Enemy")
+			if enemy == null:
+				printerr("[Player] Enemy not found in scene! Cannot use attack.")
+				return false
 			power *= _get_move_multiplier(move_name, voltage)
 			enemy.take_damage(power, voltage)
 		_:
@@ -171,10 +176,12 @@ func _move_to_tile(tile_coords: Vector2) -> bool:
 			self.tile_coords = tile_coords
 			var adjusted_position = tile_coords * grid.scale
 			position = adjusted_position
+			moved_tile.emit(id)
 			return true
 		
 	return false
 
 func start_tile_selection():
-	player_state = PlayerState.SELECTING_TILE
-	# enable grid selection
+	if active:
+		player_state = PlayerState.SELECTING_TILE
+		grid.enable_selection()
