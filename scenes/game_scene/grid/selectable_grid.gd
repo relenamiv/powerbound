@@ -29,7 +29,6 @@ func _generate_grid(width: int, length: int):
 
 			var tile_coords = map_to_local(iso_pos)
 			valid_tiles.append(_get_tile_pos(tile_coords))
-			print(_get_tile_pos(tile_coords))
 			
 func _input(event):
 	if active and event is InputEventMouseButton and event.pressed:

@@ -19,7 +19,8 @@ var tile_coords: Vector2 = Vector2(-1, -1)
 
 var incoming_heal: int = 0
 
-@onready var grid = get_parent().get_node("SelectableGrid")
+@onready var grid = get_node("../../SelectableGrid")
+@onready var id = get_index() 
 
 signal energy_changed(_energy: int, max_energy: int)
 signal update_status_message(message: String)
@@ -40,6 +41,12 @@ func _load_player_data():
 	moveset = player_data["moveset"]
 	if player_data.has("passive"):
 		passive = player_data["passive"]
+
+func move_to_starting_position(starting_positions: Array[Vector2]):
+	player_state = PlayerState.SELECTING_TILE
+	if not _move_to_tile(starting_positions[id]):
+		printerr("[Player] ERROR: %s did not move to starting position %s" % [name, str(starting_positions[id])])
+	player_state = PlayerState.IDLE
 
 func _on_animation_finished():
 	if %AnimatedSprite2D.animation == "die":
@@ -140,7 +147,7 @@ func on_tile_selected(tile_coords: Vector2):
 		PlayerState.SELECTING_TILE:
 			if _move_to_tile(tile_coords):
 				player_state = PlayerState.IDLE
-				#grid.disable_selection()
+				grid.disable_selection()
 		PlayerState.SELECTING_PLAYER:
 			if grid.is_tile_occupied(tile_coords):
 				var target_player = grid.occupied_tiles[tile_coords]
@@ -158,7 +165,8 @@ func _move_to_tile(tile_coords: Vector2) -> bool:
 			grid.vacate_tile(self.tile_coords)
 		if grid.occupy_tile(tile_coords, self):
 			self.tile_coords = tile_coords
-			# TODO: Change position
+			var adjusted_position = tile_coords * grid.scale
+			position = adjusted_position
 			return true
 		
 	return false

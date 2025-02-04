@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://dai36xap2cuiu"]
+[gd_scene load_steps=23 format=3 uid="uid://dai36xap2cuiu"]
 
 [ext_resource type="Texture2D" uid="uid://bl4lghxpbmehc" path="res://assets/player/death_spritesheet.png" id="1_d05fg"]
 [ext_resource type="Texture2D" uid="uid://gjc0skg3340w" path="res://assets/player/attack_spritesheet.png" id="1_sbg03"]
+[ext_resource type="Script" path="res://scenes/game_scene/player/player.gd" id="1_snh7n"]
 [ext_resource type="Texture2D" uid="uid://bcoal8apvpxie" path="res://assets/player/damage_spritesheet.png" id="2_ejcea"]
 [ext_resource type="Texture2D" uid="uid://tdwrttvfifuh" path="res://assets/player/idle_spritesheet.png" id="4_o18o7"]
 
@@ -150,6 +151,7 @@ animations = [{
 }]
 
 [node name="Red" type="Node2D"]
+script = ExtResource("1_snh7n")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

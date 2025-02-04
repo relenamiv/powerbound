@@ -22,17 +22,16 @@ scale = Vector2(4, 4)
 
 [node name="GridHighlighter" parent="GameContainer" instance=ExtResource("3_k3dda")]
 
-[node name="Green" parent="GameContainer" instance=ExtResource("3_org58")]
+[node name="PlayerContainer" type="Node2D" parent="GameContainer"]
+
+[node name="Green" parent="GameContainer/PlayerContainer" groups=["players"] instance=ExtResource("3_org58")]
 scale = Vector2(0.15, 0.15)
 
-[node name="Blue" parent="GameContainer" instance=ExtResource("4_7nbt4")]
-visible = false
+[node name="Blue" parent="GameContainer/PlayerContainer" groups=["players"] instance=ExtResource("4_7nbt4")]
 scale = Vector2(0.15, 0.15)
 
-[node name="Red" parent="GameContainer" instance=ExtResource("5_b6d7b")]
-visible = false
+[node name="Red" parent="GameContainer/PlayerContainer" groups=["players"] instance=ExtResource("5_b6d7b")]
 scale = Vector2(0.15, 0.15)
 
-[node name="Yellow" parent="GameContainer" instance=ExtResource("6_axhaq")]
-visible = false
+[node name="Yellow" parent="GameContainer/PlayerContainer" groups=["players"] instance=ExtResource("6_axhaq")]
 scale = Vector2(0.15, 0.15)
