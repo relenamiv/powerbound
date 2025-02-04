@@ -10,7 +10,7 @@ enum PlayerState {
 var player_state: PlayerState = PlayerState.IDLE
 var active: bool = false
 
-var _energy: int
+var energy: int
 var max_energy: int
 var moveset: Array
 var passive: String
@@ -22,7 +22,7 @@ var incoming_heal: int = 0
 @onready var grid = get_node("../../SelectableGrid")
 @onready var id = get_index() 
 
-signal energy_changed(_energy: int, max_energy: int)
+signal energy_changed(energy: int, max_energy: int)
 signal moved_tile(id: int)
 signal player_downed(id: int)
 signal update_status_message(message: String)
@@ -39,7 +39,7 @@ func _ready() -> void:
 func _load_player_data():
 	var player_data = PlayerData.players[name]
 	max_energy = player_data["energy"]
-	_energy = max_energy # Set current health
+	energy = max_energy # Set current health
 	moveset = player_data["moveset"]
 	if player_data.has("passive"):
 		passive = player_data["passive"]
@@ -57,9 +57,9 @@ func _on_animation_finished():
 		%AnimatedSprite2D.play("idle")
 	
 func _set_energy(value: int):
-	_energy = clamp(value, 0, max_energy)
-	energy_changed.emit(_energy, max_energy)
-	if _energy <= 0:
+	energy = clamp(value, 0, max_energy)
+	energy_changed.emit(energy, max_energy)
+	if energy <= 0:
 		_handle_death()
 	
 func _handle_death():
@@ -74,7 +74,7 @@ func is_down():
 func take_damage(power: int):
 	var voltage = grid.get_voltage(tile_coords)
 	var amount = power * voltage
-	_set_energy(_energy - amount)
+	_set_energy(energy - amount)
 	
 	if player_state != PlayerState.DOWN:
 		%AnimatedSprite2D.play("hurt")
@@ -97,7 +97,7 @@ func use_move(move_name: String) -> bool:
 		
 	var move_data = PlayerData.player_movelist[move_name]
 	var cost = move_data["cost"]
-	if _energy < cost:
+	if energy < cost:
 		update_status_message.emit("Insufficient energy! Please select another move ...")
 		return false
 	var power = move_data["power"]
@@ -132,7 +132,7 @@ func use_move(move_name: String) -> bool:
 		message += move_data["status_message"]
 	update_status_message.emit(message)
 	
-	_set_energy(_energy - cost)
+	_set_energy(energy - cost)
 	return true
 
 # Move multipliers are conditional (generally based on voltage)
@@ -146,7 +146,7 @@ func _get_move_multiplier(move_name: String, voltage: int) -> int:
 	return 1
 	
 func heal(amount: int):
-	_set_energy(_energy + amount)
+	_set_energy(energy + amount)
 	
 func on_tile_selected(tile_coords: Vector2):
 	if !active:
