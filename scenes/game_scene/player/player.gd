@@ -66,6 +66,9 @@ func _handle_death():
 	
 	%AnimatedSprite2D.play_animation("die")
 	
+func is_down():
+	return player_state == PlayerState.DOWN
+	
 func take_damage(power: int):
 	var voltage = grid.get_voltage(tile_coords)
 	var amount = power * voltage
