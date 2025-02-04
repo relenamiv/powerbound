@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://clyp1kw37n8ob"]
+
+[ext_resource type="Script" path="res://scenes/game_scene/enemy/enemy.gd" id="1_n05ae"]
+[ext_resource type="Texture2D" uid="uid://o778dshuial4" path="res://assets/enemy/robot1_spritesheet.png" id="1_w1tq7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yjf43"]
+atlas = ExtResource("1_w1tq7")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yy61"]
+atlas = ExtResource("1_w1tq7")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ef6pt"]
+atlas = ExtResource("1_w1tq7")
+region = Rect2(1024, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gj347"]
+atlas = ExtResource("1_w1tq7")
+region = Rect2(1536, 0, 512, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e5uuj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yjf43")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yy61")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ef6pt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gj347")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_n05ae")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_e5uuj")
+animation = &"idle"
