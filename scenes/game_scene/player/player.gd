@@ -23,6 +23,7 @@ var incoming_heal: int = 0
 @onready var id = get_index() 
 
 signal energy_changed(_energy: int, max_energy: int)
+signal moved_tile()
 signal update_status_message(message: String)
 
 func _ready() -> void:
