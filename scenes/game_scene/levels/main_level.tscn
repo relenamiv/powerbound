@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dsowfkbx73cgv"]
+[gd_scene load_steps=11 format=3 uid="uid://dsowfkbx73cgv"]
 
 [ext_resource type="Script" path="res://scenes/game_scene/levels/level.gd" id="1_6nwjd"]
 [ext_resource type="PackedScene" uid="uid://cyhua6jk5lsf2" path="res://scenes/game_scene/grid/selectable_grid.tscn" id="2_6gqoe"]
 [ext_resource type="PackedScene" uid="uid://dx37fglxdacsw" path="res://scenes/game_scene/turn_manager.tscn" id="2_iu0kw"]
+[ext_resource type="PackedScene" uid="uid://clyp1kw37n8ob" path="res://scenes/game_scene/enemy/enemy.tscn" id="3_gnx25"]
+[ext_resource type="Texture2D" uid="uid://co4h8dd28fx7v" path="res://assets/environment/Bg.png" id="3_hlvr1"]
 [ext_resource type="PackedScene" uid="uid://cwd7qpvepqnje" path="res://scenes/game_scene/grid/grid_highlighter.tscn" id="3_k3dda"]
 [ext_resource type="PackedScene" uid="uid://hvb21csaqb1g" path="res://scenes/game_scene/player/green_player.tscn" id="3_org58"]
 [ext_resource type="PackedScene" uid="uid://cxk2i48pgc4s4" path="res://scenes/game_scene/player/blue_player.tscn" id="4_7nbt4"]
@@ -12,13 +14,22 @@
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_6nwjd")
 
-[node name="TurnManager" parent="." instance=ExtResource("2_iu0kw")]
+[node name="TurnManager" parent="." node_paths=PackedStringArray("enemy") instance=ExtResource("2_iu0kw")]
+enemy = NodePath("../GameContainer/Enemy")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_hlvr1")
 
 [node name="GameContainer" type="Node2D" parent="."]
+position = Vector2(170, 85)
+scale = Vector2(0.9, 0.9)
+
+[node name="Enemy" parent="GameContainer" groups=["enemy"] instance=ExtResource("3_gnx25")]
+position = Vector2(300, -150)
+scale = Vector2(0.8, 0.8)
 
 [node name="SelectableGrid" parent="GameContainer" instance=ExtResource("2_6gqoe")]
 scale = Vector2(4, 4)
