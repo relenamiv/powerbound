@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dx37fglxdacsw"]
+
+[ext_resource type="Script" path="res://scenes/game_scene/turn_manager.gd" id="1_ub2ud"]
+
+[node name="TurnManager" type="Node"]
+script = ExtResource("1_ub2ud")
+
+[node name="AttackTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="EnemyTimer" type="Timer" parent="."]
+unique_name_in_owner = true
